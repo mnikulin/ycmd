@@ -50,12 +50,12 @@ class IdentifierCompleter( GeneralCompleter ):
     completions = _RemoveSmallCandidates(
       completions, self.user_options[ 'min_num_identifier_candidate_chars' ] )
 
-    def ConvertCompletionData( x ):
+    def ConvertCompletionData( i, x ):
       return responses.BuildCompletionData(
               insertion_text = x,
-              extra_menu_info='[ID]' )
+              extra_menu_info='[ID]' + ('' if i < 2 else f' {i}') )
 
-    return [ ConvertCompletionData( x ) for x in completions ]
+    return [ ConvertCompletionData( i, x ) for i, x in enumerate(completions, 1) ]
 
 
   def _AddIdentifier( self, identifier, request_data ):
